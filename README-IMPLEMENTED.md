@@ -163,9 +163,6 @@ repair-tips-api-IA/
 ├── pom.xml                   # Configuração Maven
 ├── API-ENDPOINTS.md          # Documentação dos endpoints
 └── README.md                 # Este arquivo
-```
-
----
 
 ## ▶️ Como Executar
 
