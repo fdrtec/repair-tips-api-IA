@@ -1,8 +1,8 @@
 package com.repairsystem.mapper;
 
 import com.repairsystem.domain.entity.Dica;
-import com.repairsystem.dto.request.DicaRequestDTO;
-import com.repairsystem.dto.response.DicaResponseDTO;
+import com.repairsystem.dto.DicaRequestDTO;
+import com.repairsystem.dto.DicaResponseDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 

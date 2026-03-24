@@ -1,8 +1,8 @@
 package com.repairsystem.mapper;
 
 import com.repairsystem.domain.entity.Equipamento;
-import com.repairsystem.dto.request.EquipamentoRequestDTO;
-import com.repairsystem.dto.response.EquipamentoResponseDTO;
+import com.repairsystem.dto.EquipamentoRequestDTO;
+import com.repairsystem.dto.EquipamentoResponseDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 

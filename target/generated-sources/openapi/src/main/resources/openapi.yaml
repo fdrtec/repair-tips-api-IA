@@ -1,0 +1,1190 @@
+openapi: 3.0.0
+info:
+  contact:
+    name: API Support
+    url: https://example.com
+  description: API Backend para Sistema de Consulta de Dicas de Conserto de Equipamentos
+  license:
+    name: MIT
+  title: Repair Tips API
+  version: 1.0.0
+servers:
+- description: Development Server
+  url: http://localhost:8080/api
+- description: Production Server
+  url: https://api.example.com/api
+tags:
+- description: Operações com fabricantes de equipamentos
+  name: Fabricantes
+- description: Operações com equipamentos
+  name: Equipamentos
+- description: Operações com dicas de conserto
+  name: Dicas
+- description: Operações com peças de equipamentos
+  name: Peças
+paths:
+  /fabricantes:
+    get:
+      operationId: getFabricantes
+      parameters:
+      - explode: true
+        in: query
+        name: page
+        required: false
+        schema:
+          default: 0
+          type: integer
+        style: form
+      - explode: true
+        in: query
+        name: size
+        required: false
+        schema:
+          default: 20
+          type: integer
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PageFabricanteResponseDTO'
+          description: Lista de fabricantes retornada com sucesso
+      summary: Listar todos os fabricantes
+      tags:
+      - Fabricantes
+      x-accepts:
+      - application/json
+      x-tags:
+      - tag: Fabricantes
+    post:
+      operationId: createFabricante
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FabricanteRequestDTO'
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FabricanteResponseDTO'
+          description: Fabricante criado com sucesso
+        "400":
+          description: Dados inválidos
+      summary: Criar novo fabricante
+      tags:
+      - Fabricantes
+      x-content-type: application/json
+      x-accepts:
+      - application/json
+      x-tags:
+      - tag: Fabricantes
+  /fabricantes/{id}:
+    delete:
+      operationId: deleteFabricante
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          format: int64
+          type: integer
+        style: simple
+      responses:
+        "204":
+          description: Fabricante deletado com sucesso
+        "404":
+          description: Fabricante não encontrado
+      summary: Deletar fabricante
+      tags:
+      - Fabricantes
+      x-accepts:
+      - application/json
+      x-tags:
+      - tag: Fabricantes
+    get:
+      operationId: getFabricanteById
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          format: int64
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FabricanteResponseDTO'
+          description: Fabricante encontrado
+        "404":
+          description: Fabricante não encontrado
+      summary: Obter fabricante por ID
+      tags:
+      - Fabricantes
+      x-accepts:
+      - application/json
+      x-tags:
+      - tag: Fabricantes
+    put:
+      operationId: updateFabricante
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          format: int64
+          type: integer
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FabricanteRequestDTO'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FabricanteResponseDTO'
+          description: Fabricante atualizado com sucesso
+        "404":
+          description: Fabricante não encontrado
+      summary: Atualizar fabricante
+      tags:
+      - Fabricantes
+      x-content-type: application/json
+      x-accepts:
+      - application/json
+      x-tags:
+      - tag: Fabricantes
+  /fabricantes/nome/{nome}:
+    get:
+      operationId: getFabricanteByNome
+      parameters:
+      - explode: false
+        in: path
+        name: nome
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FabricanteResponseDTO'
+          description: Fabricante encontrado
+        "404":
+          description: Fabricante não encontrado
+      summary: Buscar fabricante por nome
+      tags:
+      - Fabricantes
+      x-accepts:
+      - application/json
+      x-tags:
+      - tag: Fabricantes
+  /equipamentos:
+    get:
+      operationId: getEquipamentos
+      parameters:
+      - explode: true
+        in: query
+        name: page
+        required: false
+        schema:
+          default: 0
+          type: integer
+        style: form
+      - explode: true
+        in: query
+        name: size
+        required: false
+        schema:
+          default: 20
+          type: integer
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PageEquipamentoResponseDTO'
+          description: Lista de equipamentos
+      summary: Listar todos os equipamentos
+      tags:
+      - Equipamentos
+      x-accepts:
+      - application/json
+      x-tags:
+      - tag: Equipamentos
+    post:
+      operationId: createEquipamento
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EquipamentoRequestDTO'
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EquipamentoResponseDTO'
+          description: Equipamento criado com sucesso
+      summary: Criar novo equipamento
+      tags:
+      - Equipamentos
+      x-content-type: application/json
+      x-accepts:
+      - application/json
+      x-tags:
+      - tag: Equipamentos
+  /equipamentos/categoria/{categoria}:
+    get:
+      operationId: getEquipamentosByCategoria
+      parameters:
+      - explode: false
+        in: path
+        name: categoria
+        required: true
+        schema:
+          $ref: '#/components/schemas/CategoriaEquipamento'
+        style: simple
+      - explode: true
+        in: query
+        name: page
+        required: false
+        schema:
+          default: 0
+          type: integer
+        style: form
+      - explode: true
+        in: query
+        name: size
+        required: false
+        schema:
+          default: 20
+          type: integer
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PageEquipamentoResponseDTO'
+          description: Equipamentos encontrados
+      summary: Buscar equipamentos por categoria
+      tags:
+      - Equipamentos
+      x-accepts:
+      - application/json
+      x-tags:
+      - tag: Equipamentos
+  /equipamentos/tipo/{tipo}:
+    get:
+      operationId: getEquipamentosByTipo
+      parameters:
+      - explode: false
+        in: path
+        name: tipo
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: true
+        in: query
+        name: page
+        required: false
+        schema:
+          default: 0
+          type: integer
+        style: form
+      - explode: true
+        in: query
+        name: size
+        required: false
+        schema:
+          default: 20
+          type: integer
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PageEquipamentoResponseDTO'
+          description: Equipamentos encontrados
+      summary: Buscar equipamentos por tipo
+      tags:
+      - Equipamentos
+      x-accepts:
+      - application/json
+      x-tags:
+      - tag: Equipamentos
+  /equipamentos/fabricante/{fabricanteId}:
+    get:
+      operationId: getEquipamentosByFabricante
+      parameters:
+      - explode: false
+        in: path
+        name: fabricanteId
+        required: true
+        schema:
+          format: int64
+          type: integer
+        style: simple
+      - explode: true
+        in: query
+        name: page
+        required: false
+        schema:
+          default: 0
+          type: integer
+        style: form
+      - explode: true
+        in: query
+        name: size
+        required: false
+        schema:
+          default: 20
+          type: integer
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PageEquipamentoResponseDTO'
+          description: Equipamentos encontrados
+      summary: Buscar equipamentos por fabricante
+      tags:
+      - Equipamentos
+      x-accepts:
+      - application/json
+      x-tags:
+      - tag: Equipamentos
+  /equipamentos/{id}:
+    delete:
+      operationId: deleteEquipamento
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          format: int64
+          type: integer
+        style: simple
+      responses:
+        "204":
+          description: Equipamento deletado com sucesso
+      summary: Deletar equipamento
+      tags:
+      - Equipamentos
+      x-accepts:
+      - application/json
+      x-tags:
+      - tag: Equipamentos
+    get:
+      operationId: getEquipamentoById
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          format: int64
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EquipamentoResponseDTO'
+          description: Equipamento encontrado
+        "404":
+          description: Equipamento não encontrado
+      summary: Obter equipamento por ID
+      tags:
+      - Equipamentos
+      x-accepts:
+      - application/json
+      x-tags:
+      - tag: Equipamentos
+    put:
+      operationId: updateEquipamento
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          format: int64
+          type: integer
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EquipamentoRequestDTO'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EquipamentoResponseDTO'
+          description: Equipamento atualizado
+      summary: Atualizar equipamento
+      tags:
+      - Equipamentos
+      x-content-type: application/json
+      x-accepts:
+      - application/json
+      x-tags:
+      - tag: Equipamentos
+  /equipamentos/modelo/{modelo}:
+    get:
+      operationId: searchEquipamentosByModelo
+      parameters:
+      - explode: false
+        in: path
+        name: modelo
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: true
+        in: query
+        name: page
+        required: false
+        schema:
+          default: 0
+          type: integer
+        style: form
+      - explode: true
+        in: query
+        name: size
+        required: false
+        schema:
+          default: 20
+          type: integer
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PageEquipamentoResponseDTO'
+          description: Equipamentos encontrados
+      summary: Buscar equipamentos por modelo
+      tags:
+      - Equipamentos
+      x-accepts:
+      - application/json
+      x-tags:
+      - tag: Equipamentos
+  /dicas:
+    get:
+      operationId: getDicas
+      parameters:
+      - explode: true
+        in: query
+        name: page
+        required: false
+        schema:
+          default: 0
+          type: integer
+        style: form
+      - explode: true
+        in: query
+        name: size
+        required: false
+        schema:
+          default: 20
+          type: integer
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PageDicaResponseDTO'
+          description: Lista de dicas
+      summary: Listar todas as dicas
+      tags:
+      - Dicas
+      x-accepts:
+      - application/json
+      x-tags:
+      - tag: Dicas
+    post:
+      operationId: createDica
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DicaRequestDTO'
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DicaResponseDTO'
+          description: Dica criada com sucesso
+      summary: Criar nova dica
+      tags:
+      - Dicas
+      x-content-type: application/json
+      x-accepts:
+      - application/json
+      x-tags:
+      - tag: Dicas
+  /dicas/{id}:
+    delete:
+      operationId: deleteDica
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          format: int64
+          type: integer
+        style: simple
+      responses:
+        "204":
+          description: Dica deletada com sucesso
+      summary: Deletar dica
+      tags:
+      - Dicas
+      x-accepts:
+      - application/json
+      x-tags:
+      - tag: Dicas
+    get:
+      operationId: getDicaById
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          format: int64
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DicaResponseDTO'
+          description: Dica encontrada
+      summary: Obter dica por ID
+      tags:
+      - Dicas
+      x-accepts:
+      - application/json
+      x-tags:
+      - tag: Dicas
+    put:
+      operationId: updateDica
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          format: int64
+          type: integer
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DicaRequestDTO'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DicaResponseDTO'
+          description: Dica atualizada
+      summary: Atualizar dica
+      tags:
+      - Dicas
+      x-content-type: application/json
+      x-accepts:
+      - application/json
+      x-tags:
+      - tag: Dicas
+  /dicas/{id}/reativar:
+    patch:
+      operationId: reativarDica
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          format: int64
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DicaResponseDTO'
+          description: Dica reativada
+      summary: Reativar dica desativada
+      tags:
+      - Dicas
+      x-accepts:
+      - application/json
+      x-tags:
+      - tag: Dicas
+  /dicas/problema/{problema}:
+    get:
+      operationId: searchDicasByProblema
+      parameters:
+      - explode: false
+        in: path
+        name: problema
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: true
+        in: query
+        name: page
+        required: false
+        schema:
+          default: 0
+          type: integer
+        style: form
+      - explode: true
+        in: query
+        name: size
+        required: false
+        schema:
+          default: 20
+          type: integer
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PageDicaResponseDTO'
+          description: Dicas encontradas
+      summary: Buscar dicas por problema
+      tags:
+      - Dicas
+      x-accepts:
+      - application/json
+      x-tags:
+      - tag: Dicas
+  /dicas/equipamento/{equipamentoId}:
+    get:
+      operationId: getDicasByEquipamento
+      parameters:
+      - explode: false
+        in: path
+        name: equipamentoId
+        required: true
+        schema:
+          format: int64
+          type: integer
+        style: simple
+      - explode: true
+        in: query
+        name: page
+        required: false
+        schema:
+          default: 0
+          type: integer
+        style: form
+      - explode: true
+        in: query
+        name: size
+        required: false
+        schema:
+          default: 20
+          type: integer
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PageDicaResponseDTO'
+          description: Dicas encontradas
+      summary: Buscar dicas por equipamento
+      tags:
+      - Dicas
+      x-accepts:
+      - application/json
+      x-tags:
+      - tag: Dicas
+  /pecas:
+    get:
+      operationId: getPecas
+      parameters:
+      - explode: true
+        in: query
+        name: page
+        required: false
+        schema:
+          default: 0
+          type: integer
+        style: form
+      - explode: true
+        in: query
+        name: size
+        required: false
+        schema:
+          default: 20
+          type: integer
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagePecaResponseDTO'
+          description: Lista de peças
+      summary: Listar todas as peças
+      tags:
+      - Peças
+      x-accepts:
+      - application/json
+      x-tags:
+      - tag: Peças
+    post:
+      operationId: createPeca
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PecaRequestDTO'
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PecaResponseDTO'
+          description: Peça criada com sucesso
+      summary: Criar nova peça
+      tags:
+      - Peças
+      x-content-type: application/json
+      x-accepts:
+      - application/json
+      x-tags:
+      - tag: Peças
+  /pecas/{id}:
+    delete:
+      operationId: deletePeca
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          format: int64
+          type: integer
+        style: simple
+      responses:
+        "204":
+          description: Peça deletada com sucesso
+      summary: Deletar peça
+      tags:
+      - Peças
+      x-accepts:
+      - application/json
+      x-tags:
+      - tag: Peças
+    get:
+      operationId: getPecaById
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          format: int64
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PecaResponseDTO'
+          description: Peça encontrada
+      summary: Obter peça por ID
+      tags:
+      - Peças
+      x-accepts:
+      - application/json
+      x-tags:
+      - tag: Peças
+    put:
+      operationId: updatePeca
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          format: int64
+          type: integer
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PecaRequestDTO'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PecaResponseDTO'
+          description: Peça atualizada
+      summary: Atualizar peça
+      tags:
+      - Peças
+      x-content-type: application/json
+      x-accepts:
+      - application/json
+      x-tags:
+      - tag: Peças
+components:
+  schemas:
+    CategoriaEquipamento:
+      description: Categoria do equipamento
+      enum:
+      - ELETRONICO
+      - ELETRODOMESTICO
+      - INFORMATICA
+      - CLIMATIZACAO
+      - OUTRO
+      type: string
+    FabricanteRequestDTO:
+      example:
+        sigla: sigla
+        nome: nome
+      properties:
+        nome:
+          description: Nome do fabricante
+          maxLength: 100
+          minLength: 3
+          type: string
+        sigla:
+          description: Sigla do fabricante
+          maxLength: 5
+          minLength: 2
+          type: string
+      required:
+      - nome
+      - sigla
+      type: object
+    FabricanteResponseDTO:
+      example:
+        sigla: sigla
+        nome: nome
+        id: 0
+      properties:
+        id:
+          description: ID do fabricante
+          format: int64
+          type: integer
+        nome:
+          description: Nome do fabricante
+          type: string
+        sigla:
+          description: Sigla do fabricante
+          type: string
+      type: object
+    EquipamentoRequestDTO:
+      example:
+        tipo: tipo
+        categoria: ELETRONICO
+        fabricanteId: 0
+        modelo: modelo
+      properties:
+        modelo:
+          description: Modelo do equipamento
+          maxLength: 100
+          minLength: 1
+          type: string
+        categoria:
+          $ref: '#/components/schemas/CategoriaEquipamento'
+        tipo:
+          description: Tipo do equipamento
+          maxLength: 50
+          minLength: 1
+          type: string
+        fabricanteId:
+          description: ID do fabricante
+          format: int64
+          type: integer
+      required:
+      - categoria
+      - fabricanteId
+      - modelo
+      - tipo
+      type: object
+    EquipamentoResponseDTO:
+      example:
+        tipo: tipo
+        categoria: ELETRONICO
+        id: 0
+        fabricanteId: 6
+        modelo: modelo
+      properties:
+        id:
+          format: int64
+          type: integer
+        modelo:
+          type: string
+        categoria:
+          $ref: '#/components/schemas/CategoriaEquipamento'
+        tipo:
+          type: string
+        fabricanteId:
+          format: int64
+          type: integer
+      type: object
+    DicaRequestDTO:
+      example:
+        solucao: solucao
+        equipamentoId: 0
+        problema: problema
+      properties:
+        problema:
+          description: Descrição do problema
+          type: string
+        solucao:
+          description: Solução para o problema
+          type: string
+        equipamentoId:
+          description: ID do equipamento
+          format: int64
+          type: integer
+      required:
+      - equipamentoId
+      - problema
+      - solucao
+      type: object
+    DicaResponseDTO:
+      example:
+        ativo: true
+        solucao: solucao
+        equipamentoId: 6
+        dataAtualizacao: 2000-01-23T04:56:07.000+00:00
+        problema: problema
+        id: 0
+        dataCriacao: 2000-01-23T04:56:07.000+00:00
+      properties:
+        id:
+          format: int64
+          type: integer
+        problema:
+          type: string
+        solucao:
+          type: string
+        equipamentoId:
+          format: int64
+          type: integer
+        dataCriacao:
+          format: date-time
+          type: string
+        dataAtualizacao:
+          format: date-time
+          type: string
+        ativo:
+          type: boolean
+      type: object
+    PecaRequestDTO:
+      example:
+        equipamentoId: 0
+        categoria: categoria
+        nome: nome
+        partNumber: partNumber
+      properties:
+        nome:
+          description: Nome da peça
+          type: string
+        partNumber:
+          description: Número da parte
+          type: string
+        categoria:
+          description: Categoria da peça
+          type: string
+        equipamentoId:
+          description: ID do equipamento
+          format: int64
+          type: integer
+      required:
+      - categoria
+      - equipamentoId
+      - nome
+      - partNumber
+      type: object
+    PecaResponseDTO:
+      example:
+        equipamentoId: 6
+        categoria: categoria
+        nome: nome
+        partNumber: partNumber
+        id: 0
+      properties:
+        id:
+          format: int64
+          type: integer
+        nome:
+          type: string
+        partNumber:
+          type: string
+        categoria:
+          type: string
+        equipamentoId:
+          format: int64
+          type: integer
+      type: object
+    PageFabricanteResponseDTO:
+      example:
+        totalPages: 1
+        currentPage: 5
+        content:
+        - sigla: sigla
+          nome: nome
+          id: 0
+        - sigla: sigla
+          nome: nome
+          id: 0
+        totalElements: 6
+      properties:
+        content:
+          items:
+            $ref: '#/components/schemas/FabricanteResponseDTO'
+          type: array
+        totalElements:
+          format: int64
+          type: integer
+        totalPages:
+          type: integer
+        currentPage:
+          type: integer
+      type: object
+    PageEquipamentoResponseDTO:
+      example:
+        totalPages: 5
+        currentPage: 5
+        content:
+        - tipo: tipo
+          categoria: ELETRONICO
+          id: 0
+          fabricanteId: 6
+          modelo: modelo
+        - tipo: tipo
+          categoria: ELETRONICO
+          id: 0
+          fabricanteId: 6
+          modelo: modelo
+        totalElements: 1
+      properties:
+        content:
+          items:
+            $ref: '#/components/schemas/EquipamentoResponseDTO'
+          type: array
+        totalElements:
+          format: int64
+          type: integer
+        totalPages:
+          type: integer
+        currentPage:
+          type: integer
+      type: object
+    PageDicaResponseDTO:
+      example:
+        totalPages: 5
+        currentPage: 5
+        content:
+        - ativo: true
+          solucao: solucao
+          equipamentoId: 6
+          dataAtualizacao: 2000-01-23T04:56:07.000+00:00
+          problema: problema
+          id: 0
+          dataCriacao: 2000-01-23T04:56:07.000+00:00
+        - ativo: true
+          solucao: solucao
+          equipamentoId: 6
+          dataAtualizacao: 2000-01-23T04:56:07.000+00:00
+          problema: problema
+          id: 0
+          dataCriacao: 2000-01-23T04:56:07.000+00:00
+        totalElements: 1
+      properties:
+        content:
+          items:
+            $ref: '#/components/schemas/DicaResponseDTO'
+          type: array
+        totalElements:
+          format: int64
+          type: integer
+        totalPages:
+          type: integer
+        currentPage:
+          type: integer
+      type: object
+    PagePecaResponseDTO:
+      example:
+        totalPages: 5
+        currentPage: 5
+        content:
+        - equipamentoId: 6
+          categoria: categoria
+          nome: nome
+          partNumber: partNumber
+          id: 0
+        - equipamentoId: 6
+          categoria: categoria
+          nome: nome
+          partNumber: partNumber
+          id: 0
+        totalElements: 1
+      properties:
+        content:
+          items:
+            $ref: '#/components/schemas/PecaResponseDTO'
+          type: array
+        totalElements:
+          format: int64
+          type: integer
+        totalPages:
+          type: integer
+        currentPage:
+          type: integer
+      type: object

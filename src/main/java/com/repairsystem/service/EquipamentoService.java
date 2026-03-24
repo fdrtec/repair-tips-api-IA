@@ -2,10 +2,9 @@ package com.repairsystem.service;
 
 import com.repairsystem.domain.entity.Equipamento;
 import com.repairsystem.domain.enums.CategoriaEquipamento;
-import com.repairsystem.dto.request.EquipamentoRequestDTO;
-import com.repairsystem.dto.response.EquipamentoResponseDTO;
+import com.repairsystem.dto.EquipamentoRequestDTO;
+import com.repairsystem.dto.EquipamentoResponseDTO;
 import com.repairsystem.exception.EntityNotFoundException;
-import com.repairsystem.mapper.EquipamentoMapper;
 import com.repairsystem.repository.EquipamentoRepository;
 import com.repairsystem.repository.FabricanteRepository;
 import lombok.RequiredArgsConstructor;
@@ -25,56 +24,59 @@ public class EquipamentoService {
 
     private final EquipamentoRepository repository;
     private final FabricanteRepository fabricanteRepository;
-    private final EquipamentoMapper mapper;
 
     @Transactional
     public EquipamentoResponseDTO criar(EquipamentoRequestDTO requestDTO) {
-        log.debug("Criando novo equipamento: {}", requestDTO.modelo());
+        log.debug("Criando novo equipamento: {}", requestDTO.getModelo());
 
-        var fabricante = fabricanteRepository.findById(requestDTO.fabricanteId())
-            .orElseThrow(() -> EntityNotFoundException.ofEntity("Fabricante", requestDTO.fabricanteId()));
+        var fabricante = fabricanteRepository.findById(requestDTO.getFabricanteId())
+            .orElseThrow(() -> EntityNotFoundException.ofEntity("Fabricante", requestDTO.getFabricanteId()));
 
-        var equipamento = mapper.toEntity(requestDTO);
+        var equipamento = new Equipamento();
+        equipamento.setModelo(requestDTO.getModelo());
+        equipamento.setCategoria(convertToEntityCategoria(requestDTO.getCategoria()));
+        equipamento.setTipo(requestDTO.getTipo());
         equipamento.setFabricante(fabricante);
+        
         var salvo = repository.save(equipamento);
 
         log.info("Equipamento criado com sucesso - ID: {}", salvo.getId());
-        return mapper.toResponseDTO(salvo);
+        return convertToResponseDTO(salvo);
     }
 
     public Page<EquipamentoResponseDTO> listar(Pageable pageable) {
         log.debug("Listando equipamentos com paginação");
-        return repository.findAll(pageable).map(mapper::toResponseDTO);
+        return repository.findAll(pageable).map(this::convertToResponseDTO);
     }
 
     public Page<EquipamentoResponseDTO> listarPorCategoria(CategoriaEquipamento categoria, Pageable pageable) {
         log.debug("Listando equipamentos por categoria: {}", categoria);
-        return repository.findByCategoria(categoria, pageable).map(mapper::toResponseDTO);
+        return repository.findByCategoria(categoria, pageable).map(this::convertToResponseDTO);
     }
 
     public Page<EquipamentoResponseDTO> listarPorTipo(String tipo, Pageable pageable) {
         log.debug("Listando equipamentos por tipo: {}", tipo);
-        return repository.findByTipo(tipo, pageable).map(mapper::toResponseDTO);
+        return repository.findByTipo(tipo, pageable).map(this::convertToResponseDTO);
     }
 
     public Page<EquipamentoResponseDTO> listarPorFabricante(Long fabricanteId, Pageable pageable) {
         log.debug("Listando equipamentos por fabricante ID: {}", fabricanteId);
         verificarFabricanteExiste(fabricanteId);
-        return repository.findByFabricanteId(fabricanteId, pageable).map(mapper::toResponseDTO);
+        return repository.findByFabricanteId(fabricanteId, pageable).map(this::convertToResponseDTO);
     }
 
     public EquipamentoResponseDTO obterPorId(Long id) {
         log.debug("Buscando equipamento com ID: {}", id);
         var equipamento = repository.findById(id)
             .orElseThrow(() -> EntityNotFoundException.ofEntity("Equipamento", id));
-        return mapper.toResponseDTO(equipamento);
+        return convertToResponseDTO(equipamento);
     }
 
     public List<EquipamentoResponseDTO> buscarPorModelo(String modelo) {
         log.debug("Buscando equipamentos por modelo: {}", modelo);
         return repository.findByModeloContainingIgnoreCase(modelo)
             .stream()
-            .map(mapper::toResponseDTO)
+            .map(this::convertToResponseDTO)
             .toList();
     }
 
@@ -85,17 +87,17 @@ public class EquipamentoService {
         var equipamento = repository.findById(id)
             .orElseThrow(() -> EntityNotFoundException.ofEntity("Equipamento", id));
 
-        var fabricante = fabricanteRepository.findById(requestDTO.fabricanteId())
-            .orElseThrow(() -> EntityNotFoundException.ofEntity("Fabricante", requestDTO.fabricanteId()));
+        var fabricante = fabricanteRepository.findById(requestDTO.getFabricanteId())
+            .orElseThrow(() -> EntityNotFoundException.ofEntity("Fabricante", requestDTO.getFabricanteId()));
 
-        equipamento.setModelo(requestDTO.modelo());
-        equipamento.setCategoria(requestDTO.categoria());
-        equipamento.setTipo(requestDTO.tipo());
+        equipamento.setModelo(requestDTO.getModelo());
+        equipamento.setCategoria(convertToEntityCategoria(requestDTO.getCategoria()));
+        equipamento.setTipo(requestDTO.getTipo());
         equipamento.setFabricante(fabricante);
 
         var atualizado = repository.save(equipamento);
         log.info("Equipamento atualizado com sucesso - ID: {}", atualizado.getId());
-        return mapper.toResponseDTO(atualizado);
+        return convertToResponseDTO(atualizado);
     }
 
     @Transactional
@@ -113,5 +115,22 @@ public class EquipamentoService {
         if (!fabricanteRepository.existsById(fabricanteId)) {
             throw EntityNotFoundException.ofEntity("Fabricante", fabricanteId);
         }
+    }
+
+    private EquipamentoResponseDTO convertToResponseDTO(Equipamento entity) {
+        return new EquipamentoResponseDTO()
+            .id(entity.getId())
+            .modelo(entity.getModelo())
+            .categoria(convertToDTOCategoria(entity.getCategoria()))
+            .tipo(entity.getTipo())
+            .fabricanteId(entity.getFabricante().getId());
+    }
+
+    private com.repairsystem.domain.enums.CategoriaEquipamento convertToEntityCategoria(com.repairsystem.dto.CategoriaEquipamento dtoCategoria) {
+        return com.repairsystem.domain.enums.CategoriaEquipamento.valueOf(dtoCategoria.getValue());
+    }
+
+    private com.repairsystem.dto.CategoriaEquipamento convertToDTOCategoria(com.repairsystem.domain.enums.CategoriaEquipamento entityCategoria) {
+        return com.repairsystem.dto.CategoriaEquipamento.fromValue(entityCategoria.name());
     }
 }
