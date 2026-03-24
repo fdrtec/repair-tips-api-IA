@@ -9,10 +9,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "fabricante", indexes = {
-    @Index(name = "idx_fabricante_nome", columnList = "nome"),
-    @Index(name = "idx_fabricante_sigla", columnList = "sigla")
-})
+@Table(name = "fabricante", indexes = { @Index(name = "idx_fabricante_nome", columnList = "nome"),
+        @Index(name = "idx_fabricante_sigla", columnList = "sigla") })
 @Getter
 @Setter
 @NoArgsConstructor

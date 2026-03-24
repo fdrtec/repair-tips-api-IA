@@ -39,55 +39,51 @@ public class DicasApiDelegateImpl implements DicasApiDelegate {
         int pageSize = size.orElse(20);
         Pageable pageable = PageRequest.of(pageNum, pageSize);
         var pageResult = service.listar(pageable);
-        
+
         var pageDTO = new PageDicaResponseDTO();
         pageDTO.setContent(pageResult.getContent());
         pageDTO.setCurrentPage(Optional.of(pageResult.getNumber()));
         pageDTO.setTotalPages(Optional.of(pageResult.getTotalPages()));
         pageDTO.setTotalElements(Optional.of(pageResult.getTotalElements()));
-        
+
         return ResponseEntity.ok(pageDTO);
     }
 
     @Override
-    public ResponseEntity<PageDicaResponseDTO> searchDicasByProblema(
-            String problema, Optional<Integer> page, Optional<Integer> size) {
+    public ResponseEntity<PageDicaResponseDTO> searchDicasByProblema(String problema, Optional<Integer> page,
+            Optional<Integer> size) {
         int pageNum = page.orElse(0);
         int pageSize = size.orElse(20);
         Pageable pageable = PageRequest.of(pageNum, pageSize);
-        
+
         var problemas = service.buscarPorProblema(problema);
-        var pageResult = new org.springframework.data.domain.PageImpl<>(
-            problemas, pageable, problemas.size()
-        );
-        
+        var pageResult = new org.springframework.data.domain.PageImpl<>(problemas, pageable, problemas.size());
+
         var pageDTO = new PageDicaResponseDTO();
         pageDTO.setContent(pageResult.getContent());
         pageDTO.setCurrentPage(Optional.of(pageResult.getNumber()));
         pageDTO.setTotalPages(Optional.of(pageResult.getTotalPages()));
         pageDTO.setTotalElements(Optional.of(pageResult.getTotalElements()));
-        
+
         return ResponseEntity.ok(pageDTO);
     }
 
     @Override
-    public ResponseEntity<PageDicaResponseDTO> getDicasByEquipamento(
-            Long equipamentoId, Optional<Integer> page, Optional<Integer> size) {
+    public ResponseEntity<PageDicaResponseDTO> getDicasByEquipamento(Long equipamentoId, Optional<Integer> page,
+            Optional<Integer> size) {
         int pageNum = page.orElse(0);
         int pageSize = size.orElse(20);
         Pageable pageable = PageRequest.of(pageNum, pageSize);
-        
+
         var equipamentos = service.buscarPorEquipamento(equipamentoId);
-        var pageResult = new org.springframework.data.domain.PageImpl<>(
-            equipamentos, pageable, equipamentos.size()
-        );
-        
+        var pageResult = new org.springframework.data.domain.PageImpl<>(equipamentos, pageable, equipamentos.size());
+
         var pageDTO = new PageDicaResponseDTO();
         pageDTO.setContent(pageResult.getContent());
         pageDTO.setCurrentPage(Optional.of(pageResult.getNumber()));
         pageDTO.setTotalPages(Optional.of(pageResult.getTotalPages()));
         pageDTO.setTotalElements(Optional.of(pageResult.getTotalElements()));
-        
+
         return ResponseEntity.ok(pageDTO);
     }
 

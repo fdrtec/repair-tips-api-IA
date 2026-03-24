@@ -22,15 +22,15 @@ public interface EquipamentoRepository extends JpaRepository<Equipamento, Long> 
 
     List<Equipamento> findByModeloContainingIgnoreCase(String modelo);
 
-    @Query("SELECT e FROM Equipamento e WHERE LOWER(e.modelo) LIKE LOWER(CONCAT('%', :modelo, '%')) " +
-           "AND e.categoria = :categoria AND e.fabricante.id = :fabricanteId")
+    @Query("SELECT e FROM Equipamento e WHERE LOWER(e.modelo) LIKE LOWER(CONCAT('%', :modelo, '%')) "
+            + "AND e.categoria = :categoria AND e.fabricante.id = :fabricanteId")
     List<Equipamento> buscarEquipamentoPorFiltros(@Param("modelo") String modelo,
-                                                    @Param("categoria") CategoriaEquipamento categoria,
-                                                    @Param("fabricanteId") Long fabricanteId);
+            @Param("categoria") CategoriaEquipamento categoria, @Param("fabricanteId") Long fabricanteId);
 
     @Query("SELECT e FROM Equipamento e JOIN e.dicas d WHERE d.id = :dicaId")
     List<Equipamento> findByDicasId(@Param("dicaId") Long dicaId);
 
     @Query("SELECT COUNT(e) > 0 FROM Equipamento e WHERE e.modelo = :modelo AND e.fabricante.id = :fabricanteId")
-    boolean existeEquipamentoByModeloAndFabricante(@Param("modelo") String modelo, @Param("fabricanteId") Long fabricanteId);
+    boolean existeEquipamentoByModeloAndFabricante(@Param("modelo") String modelo,
+            @Param("fabricanteId") Long fabricanteId);
 }

@@ -10,17 +10,15 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "peca", indexes = {
-    @Index(name = "idx_peca_part_number", columnList = "part_number"),
-    @Index(name = "idx_peca_nome", columnList = "nome")
-})
+@Table(name = "peca", indexes = { @Index(name = "idx_peca_part_number", columnList = "part_number"),
+        @Index(name = "idx_peca_nome", columnList = "nome") })
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@EqualsAndHashCode(exclude = {"equipamentos", "dicas"})
-@ToString(exclude = {"equipamentos", "dicas"})
+@EqualsAndHashCode(exclude = { "equipamentos", "dicas" })
+@ToString(exclude = { "equipamentos", "dicas" })
 public class Peca {
 
     @Id
@@ -42,11 +40,11 @@ public class Peca {
     @Column(length = 100)
     private String categoria;
 
-    @ManyToMany(mappedBy = "pecas", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToMany(mappedBy = "pecas", fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
     @Builder.Default
     private Set<Equipamento> equipamentos = new HashSet<>();
 
-    @ManyToMany(mappedBy = "pecas", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToMany(mappedBy = "pecas", fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
     @Builder.Default
     private Set<Dica> dicas = new HashSet<>();
 

@@ -39,13 +39,13 @@ public class PeasApiDelegateImpl implements PeasApiDelegate {
         int pageSize = size.orElse(20);
         Pageable pageable = PageRequest.of(pageNum, pageSize);
         var pageResult = service.listar(pageable);
-        
+
         var pageDTO = new PagePecaResponseDTO();
         pageDTO.setContent(pageResult.getContent());
         pageDTO.setCurrentPage(Optional.of(pageResult.getNumber()));
         pageDTO.setTotalPages(Optional.of(pageResult.getTotalPages()));
         pageDTO.setTotalElements(Optional.of(pageResult.getTotalElements()));
-        
+
         return ResponseEntity.ok(pageDTO);
     }
 

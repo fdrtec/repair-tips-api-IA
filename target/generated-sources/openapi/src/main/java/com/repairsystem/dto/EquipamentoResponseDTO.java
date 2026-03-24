@@ -21,7 +21,7 @@ import jakarta.annotation.Generated;
  * EquipamentoResponseDTO
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2026-03-23T22:52:47.635407812-03:00[America/Sao_Paulo]", comments = "Generator version: 7.8.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2026-03-23T23:19:45.937138696-03:00[America/Sao_Paulo]", comments = "Generator version: 7.8.0")
 public class EquipamentoResponseDTO {
 
   private Optional<Long> id = Optional.empty();

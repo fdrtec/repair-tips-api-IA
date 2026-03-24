@@ -13,8 +13,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-
-
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -35,7 +33,7 @@ public class PecaService {
         peca.setNome(requestDTO.getNome());
         peca.setPartNumber(requestDTO.getPartNumber());
         peca.setCategoria(requestDTO.getCategoria());
-        
+
         var salva = repository.save(peca);
 
         log.info("Peça criada com sucesso - ID: {}", salva.getId());
@@ -59,15 +57,14 @@ public class PecaService {
 
     public PecaResponseDTO obterPorId(Long id) {
         log.debug("Buscando peça com ID: {}", id);
-        var peca = repository.findById(id)
-            .orElseThrow(() -> EntityNotFoundException.ofEntity("Peça", id));
+        var peca = repository.findById(id).orElseThrow(() -> EntityNotFoundException.ofEntity("Peça", id));
         return convertToResponseDTO(peca);
     }
 
     public PecaResponseDTO obterPorPartNumber(String partNumber) {
         log.debug("Buscando peça com partNumber: {}", partNumber);
         var peca = repository.findByPartNumber(partNumber)
-            .orElseThrow(() -> EntityNotFoundException.ofEntity("Peça", "partNumber", partNumber));
+                .orElseThrow(() -> EntityNotFoundException.ofEntity("Peça", "partNumber", partNumber));
         return convertToResponseDTO(peca);
     }
 
@@ -85,11 +82,10 @@ public class PecaService {
     public PecaResponseDTO atualizar(Long id, PecaRequestDTO requestDTO) {
         log.debug("Atualizando peça ID: {}", id);
 
-        var peca = repository.findById(id)
-            .orElseThrow(() -> EntityNotFoundException.ofEntity("Peça", id));
+        var peca = repository.findById(id).orElseThrow(() -> EntityNotFoundException.ofEntity("Peça", id));
 
-        if (!peca.getPartNumber().equals(requestDTO.getPartNumber()) && 
-            repository.existsPartNumberIgnoreCase(requestDTO.getPartNumber())) {
+        if (!peca.getPartNumber().equals(requestDTO.getPartNumber())
+                && repository.existsPartNumberIgnoreCase(requestDTO.getPartNumber())) {
             throw DuplicateEntityException.ofField("Peça", "partNumber", requestDTO.getPartNumber());
         }
 
@@ -106,18 +102,14 @@ public class PecaService {
     public void deletar(Long id) {
         log.debug("Deletando peça ID: {}", id);
 
-        var peca = repository.findById(id)
-            .orElseThrow(() -> EntityNotFoundException.ofEntity("Peça", id));
+        var peca = repository.findById(id).orElseThrow(() -> EntityNotFoundException.ofEntity("Peça", id));
 
         repository.delete(peca);
         log.info("Peça deletada com sucesso - ID: {}", id);
     }
 
     private PecaResponseDTO convertToResponseDTO(Peca entity) {
-        return new PecaResponseDTO()
-            .id(entity.getId())
-            .nome(entity.getNome())
-            .partNumber(entity.getPartNumber())
-            .categoria(entity.getCategoria());
+        return new PecaResponseDTO().id(entity.getId()).nome(entity.getNome()).partNumber(entity.getPartNumber())
+                .categoria(entity.getCategoria());
     }
 }

@@ -31,7 +31,7 @@ import java.util.Map;
 import java.util.Optional;
 import jakarta.annotation.Generated;
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2026-03-23T22:52:47.635407812-03:00[America/Sao_Paulo]", comments = "Generator version: 7.8.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2026-03-23T23:19:45.937138696-03:00[America/Sao_Paulo]", comments = "Generator version: 7.8.0")
 @Validated
 @Tag(name = "Fabricantes", description = "Operações com fabricantes de equipamentos")
 public interface FabricantesApi {

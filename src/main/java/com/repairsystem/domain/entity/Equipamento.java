@@ -11,19 +11,17 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "equipamento", indexes = {
-    @Index(name = "idx_equipamento_modelo", columnList = "modelo"),
-    @Index(name = "idx_equipamento_categoria", columnList = "categoria"),
-    @Index(name = "idx_equipamento_tipo", columnList = "tipo"),
-    @Index(name = "idx_equipamento_fabricante_id", columnList = "fabricante_id")
-})
+@Table(name = "equipamento", indexes = { @Index(name = "idx_equipamento_modelo", columnList = "modelo"),
+        @Index(name = "idx_equipamento_categoria", columnList = "categoria"),
+        @Index(name = "idx_equipamento_tipo", columnList = "tipo"),
+        @Index(name = "idx_equipamento_fabricante_id", columnList = "fabricante_id") })
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@EqualsAndHashCode(exclude = {"dicas", "pecas", "fabricante"})
-@ToString(exclude = {"dicas", "pecas", "fabricante"})
+@EqualsAndHashCode(exclude = { "dicas", "pecas", "fabricante" })
+@ToString(exclude = { "dicas", "pecas", "fabricante" })
 public class Equipamento {
 
     @Id
@@ -50,21 +48,13 @@ public class Equipamento {
     @JoinColumn(name = "fabricante_id", nullable = false)
     private Fabricante fabricante;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinTable(
-        name = "equipamento_dica",
-        joinColumns = @JoinColumn(name = "equipamento_id"),
-        inverseJoinColumns = @JoinColumn(name = "dica_id")
-    )
+    @ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+    @JoinTable(name = "equipamento_dica", joinColumns = @JoinColumn(name = "equipamento_id"), inverseJoinColumns = @JoinColumn(name = "dica_id"))
     @Builder.Default
     private Set<Dica> dicas = new HashSet<>();
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinTable(
-        name = "equipamento_peca",
-        joinColumns = @JoinColumn(name = "equipamento_id"),
-        inverseJoinColumns = @JoinColumn(name = "peca_id")
-    )
+    @ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+    @JoinTable(name = "equipamento_peca", joinColumns = @JoinColumn(name = "equipamento_id"), inverseJoinColumns = @JoinColumn(name = "peca_id"))
     @Builder.Default
     private Set<Peca> pecas = new HashSet<>();
 

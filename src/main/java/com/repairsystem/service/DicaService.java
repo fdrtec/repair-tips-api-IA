@@ -30,7 +30,7 @@ public class DicaService {
         dica.setProblemDescricao(requestDTO.getProblema());
         dica.setSolucaoDescricao(requestDTO.getSolucao());
         dica.setAtivo(true);
-        
+
         var salva = repository.save(dica);
 
         log.info("Dica criada com sucesso - ID: {}", salva.getId());
@@ -44,58 +44,44 @@ public class DicaService {
 
     public List<DicaResponseDTO> listarTodas() {
         log.debug("Listando todas as dicas ativas ordenadas por data");
-        return repository.findByAtivoTrueOrderByDataCriacaoDesc()
-            .stream()
-            .map(this::convertToResponseDTO)
-            .toList();
+        return repository.findByAtivoTrueOrderByDataCriacaoDesc().stream().map(this::convertToResponseDTO).toList();
     }
 
     public DicaResponseDTO obterPorId(Long id) {
         log.debug("Buscando dica com ID: {}", id);
-        var dica = repository.findById(id)
-            .filter(d -> d.getAtivo() == Boolean.TRUE)
-            .orElseThrow(() -> EntityNotFoundException.ofEntity("Dica", id));
+        var dica = repository.findById(id).filter(d -> d.getAtivo() == Boolean.TRUE)
+                .orElseThrow(() -> EntityNotFoundException.ofEntity("Dica", id));
         return convertToResponseDTO(dica);
     }
 
     public List<DicaResponseDTO> buscarPorProblema(String problema) {
         log.debug("Buscando dicas por problema: {}", problema);
-        return repository.findByProblemaDescricaoContainingIgnoreCase(problema)
-            .stream()
-            .map(this::convertToResponseDTO)
-            .toList();
+        return repository.findByProblemaDescricaoContainingIgnoreCase(problema).stream().map(this::convertToResponseDTO)
+                .toList();
     }
 
     public List<DicaResponseDTO> buscarPorEquipamento(Long equipamentoId) {
         log.debug("Buscando dicas para equipamento ID: {}", equipamentoId);
-        return repository.findByEquipamentoIdAndAtivoTrue(equipamentoId)
-            .stream()
-            .map(this::convertToResponseDTO)
-            .toList();
+        return repository.findByEquipamentoIdAndAtivoTrue(equipamentoId).stream().map(this::convertToResponseDTO)
+                .toList();
     }
 
     public List<DicaResponseDTO> buscarPorPeca(Long pecaId) {
         log.debug("Buscando dicas para peça ID: {}", pecaId);
-        return repository.findByPecaIdAndAtivoTrue(pecaId)
-            .stream()
-            .map(this::convertToResponseDTO)
-            .toList();
+        return repository.findByPecaIdAndAtivoTrue(pecaId).stream().map(this::convertToResponseDTO).toList();
     }
 
     public List<DicaResponseDTO> buscarPorFabricante(String siglFabricante) {
         log.debug("Buscando dicas para fabricante: {}", siglFabricante);
-        return repository.findByFabricanteSiglaAndAtivoTrue(siglFabricante)
-            .stream()
-            .map(this::convertToResponseDTO)
-            .toList();
+        return repository.findByFabricanteSiglaAndAtivoTrue(siglFabricante).stream().map(this::convertToResponseDTO)
+                .toList();
     }
 
     @Transactional
     public DicaResponseDTO atualizar(Long id, DicaRequestDTO requestDTO) {
         log.debug("Atualizando dica ID: {}", id);
 
-        var dica = repository.findById(id)
-            .orElseThrow(() -> EntityNotFoundException.ofEntity("Dica", id));
+        var dica = repository.findById(id).orElseThrow(() -> EntityNotFoundException.ofEntity("Dica", id));
 
         dica.setProblemDescricao(requestDTO.getProblema());
         dica.setSolucaoDescricao(requestDTO.getSolucao());
@@ -109,8 +95,7 @@ public class DicaService {
     public void deletar(Long id) {
         log.debug("Deletando dica ID: {}", id);
 
-        var dica = repository.findById(id)
-            .orElseThrow(() -> EntityNotFoundException.ofEntity("Dica", id));
+        var dica = repository.findById(id).orElseThrow(() -> EntityNotFoundException.ofEntity("Dica", id));
 
         dica.setAtivo(false);
         repository.save(dica);
@@ -121,8 +106,7 @@ public class DicaService {
     public void reativar(Long id) {
         log.debug("Reativando dica ID: {}", id);
 
-        var dica = repository.findById(id)
-            .orElseThrow(() -> EntityNotFoundException.ofEntity("Dica", id));
+        var dica = repository.findById(id).orElseThrow(() -> EntityNotFoundException.ofEntity("Dica", id));
 
         dica.setAtivo(true);
         repository.save(dica);
@@ -130,11 +114,9 @@ public class DicaService {
     }
 
     private DicaResponseDTO convertToResponseDTO(Dica entity) {
-        return new DicaResponseDTO()
-            .id(entity.getId())
-            .problema(entity.getProblemDescricao())
-            .solucao(entity.getSolucaoDescricao())
-            .dataCriacao(java.time.OffsetDateTime.of(entity.getDataCriacao().toLocalDate().atStartOfDay(), java.time.ZoneOffset.UTC))
-            .ativo(entity.getAtivo());
+        return new DicaResponseDTO().id(entity.getId()).problema(entity.getProblemDescricao())
+                .solucao(entity.getSolucaoDescricao()).dataCriacao(java.time.OffsetDateTime
+                        .of(entity.getDataCriacao().toLocalDate().atStartOfDay(), java.time.ZoneOffset.UTC))
+                .ativo(entity.getAtivo());
     }
 }

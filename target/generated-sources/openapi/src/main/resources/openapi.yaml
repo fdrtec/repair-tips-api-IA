@@ -883,10 +883,16 @@ components:
     CategoriaEquipamento:
       description: Categoria do equipamento
       enum:
-      - ELETRONICO
-      - ELETRODOMESTICO
-      - INFORMATICA
-      - CLIMATIZACAO
+      - IMPRESSORA
+      - SCANNER
+      - COPIADORA
+      - MULTIFUNCIONAL
+      - FAX
+      - PROJETOR
+      - MONITOR
+      - COMPUTADOR
+      - SERVIDOR
+      - IMPRESSORA_3D
       - OUTRO
       type: string
     FabricanteRequestDTO:
@@ -928,7 +934,7 @@ components:
     EquipamentoRequestDTO:
       example:
         tipo: tipo
-        categoria: ELETRONICO
+        categoria: IMPRESSORA
         fabricanteId: 0
         modelo: modelo
       properties:
@@ -957,7 +963,7 @@ components:
     EquipamentoResponseDTO:
       example:
         tipo: tipo
-        categoria: ELETRONICO
+        categoria: IMPRESSORA
         id: 0
         fabricanteId: 6
         modelo: modelo
@@ -1103,12 +1109,12 @@ components:
         currentPage: 5
         content:
         - tipo: tipo
-          categoria: ELETRONICO
+          categoria: IMPRESSORA
           id: 0
           fabricanteId: 6
           modelo: modelo
         - tipo: tipo
-          categoria: ELETRONICO
+          categoria: IMPRESSORA
           id: 0
           fabricanteId: 6
           modelo: modelo

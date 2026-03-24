@@ -12,17 +12,15 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "dica", indexes = {
-    @Index(name = "idx_dica_ativo", columnList = "ativo"),
-    @Index(name = "idx_dica_data_criacao", columnList = "data_criacao")
-})
+@Table(name = "dica", indexes = { @Index(name = "idx_dica_ativo", columnList = "ativo"),
+        @Index(name = "idx_dica_data_criacao", columnList = "data_criacao") })
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@EqualsAndHashCode(exclude = {"equipamentos", "pecas"})
-@ToString(exclude = {"equipamentos", "pecas"})
+@EqualsAndHashCode(exclude = { "equipamentos", "pecas" })
+@ToString(exclude = { "equipamentos", "pecas" })
 public class Dica {
 
     @Id
@@ -50,16 +48,12 @@ public class Dica {
     @Column(nullable = false)
     private Boolean ativo = true;
 
-    @ManyToMany(mappedBy = "dicas", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToMany(mappedBy = "dicas", fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
     @Builder.Default
     private Set<Equipamento> equipamentos = new HashSet<>();
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinTable(
-        name = "dica_peca",
-        joinColumns = @JoinColumn(name = "dica_id"),
-        inverseJoinColumns = @JoinColumn(name = "peca_id")
-    )
+    @ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+    @JoinTable(name = "dica_peca", joinColumns = @JoinColumn(name = "dica_id"), inverseJoinColumns = @JoinColumn(name = "peca_id"))
     @Builder.Default
     private Set<Peca> pecas = new HashSet<>();
 

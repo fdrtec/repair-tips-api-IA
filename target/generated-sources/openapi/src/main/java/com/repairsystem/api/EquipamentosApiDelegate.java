@@ -21,7 +21,7 @@ import jakarta.annotation.Generated;
  * A delegate to be called by the {@link EquipamentosApiController}}.
  * Implement this interface with a {@link org.springframework.stereotype.Service} annotated class.
  */
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2026-03-23T22:52:47.635407812-03:00[America/Sao_Paulo]", comments = "Generator version: 7.8.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2026-03-23T23:19:45.937138696-03:00[America/Sao_Paulo]", comments = "Generator version: 7.8.0")
 public interface EquipamentosApiDelegate {
 
     default Optional<NativeWebRequest> getRequest() {
@@ -39,7 +39,7 @@ public interface EquipamentosApiDelegate {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"tipo\" : \"tipo\", \"categoria\" : \"ELETRONICO\", \"id\" : 0, \"fabricanteId\" : 6, \"modelo\" : \"modelo\" }";
+                    String exampleString = "{ \"tipo\" : \"tipo\", \"categoria\" : \"IMPRESSORA\", \"id\" : 0, \"fabricanteId\" : 6, \"modelo\" : \"modelo\" }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
@@ -73,7 +73,7 @@ public interface EquipamentosApiDelegate {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"tipo\" : \"tipo\", \"categoria\" : \"ELETRONICO\", \"id\" : 0, \"fabricanteId\" : 6, \"modelo\" : \"modelo\" }";
+                    String exampleString = "{ \"tipo\" : \"tipo\", \"categoria\" : \"IMPRESSORA\", \"id\" : 0, \"fabricanteId\" : 6, \"modelo\" : \"modelo\" }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
@@ -96,7 +96,7 @@ public interface EquipamentosApiDelegate {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"totalPages\" : 5, \"currentPage\" : 5, \"content\" : [ { \"tipo\" : \"tipo\", \"categoria\" : \"ELETRONICO\", \"id\" : 0, \"fabricanteId\" : 6, \"modelo\" : \"modelo\" }, { \"tipo\" : \"tipo\", \"categoria\" : \"ELETRONICO\", \"id\" : 0, \"fabricanteId\" : 6, \"modelo\" : \"modelo\" } ], \"totalElements\" : 1 }";
+                    String exampleString = "{ \"totalPages\" : 5, \"currentPage\" : 5, \"content\" : [ { \"tipo\" : \"tipo\", \"categoria\" : \"IMPRESSORA\", \"id\" : 0, \"fabricanteId\" : 6, \"modelo\" : \"modelo\" }, { \"tipo\" : \"tipo\", \"categoria\" : \"IMPRESSORA\", \"id\" : 0, \"fabricanteId\" : 6, \"modelo\" : \"modelo\" } ], \"totalElements\" : 1 }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
@@ -121,7 +121,7 @@ public interface EquipamentosApiDelegate {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"totalPages\" : 5, \"currentPage\" : 5, \"content\" : [ { \"tipo\" : \"tipo\", \"categoria\" : \"ELETRONICO\", \"id\" : 0, \"fabricanteId\" : 6, \"modelo\" : \"modelo\" }, { \"tipo\" : \"tipo\", \"categoria\" : \"ELETRONICO\", \"id\" : 0, \"fabricanteId\" : 6, \"modelo\" : \"modelo\" } ], \"totalElements\" : 1 }";
+                    String exampleString = "{ \"totalPages\" : 5, \"currentPage\" : 5, \"content\" : [ { \"tipo\" : \"tipo\", \"categoria\" : \"IMPRESSORA\", \"id\" : 0, \"fabricanteId\" : 6, \"modelo\" : \"modelo\" }, { \"tipo\" : \"tipo\", \"categoria\" : \"IMPRESSORA\", \"id\" : 0, \"fabricanteId\" : 6, \"modelo\" : \"modelo\" } ], \"totalElements\" : 1 }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
@@ -146,7 +146,7 @@ public interface EquipamentosApiDelegate {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"totalPages\" : 5, \"currentPage\" : 5, \"content\" : [ { \"tipo\" : \"tipo\", \"categoria\" : \"ELETRONICO\", \"id\" : 0, \"fabricanteId\" : 6, \"modelo\" : \"modelo\" }, { \"tipo\" : \"tipo\", \"categoria\" : \"ELETRONICO\", \"id\" : 0, \"fabricanteId\" : 6, \"modelo\" : \"modelo\" } ], \"totalElements\" : 1 }";
+                    String exampleString = "{ \"totalPages\" : 5, \"currentPage\" : 5, \"content\" : [ { \"tipo\" : \"tipo\", \"categoria\" : \"IMPRESSORA\", \"id\" : 0, \"fabricanteId\" : 6, \"modelo\" : \"modelo\" }, { \"tipo\" : \"tipo\", \"categoria\" : \"IMPRESSORA\", \"id\" : 0, \"fabricanteId\" : 6, \"modelo\" : \"modelo\" } ], \"totalElements\" : 1 }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
@@ -171,7 +171,7 @@ public interface EquipamentosApiDelegate {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"totalPages\" : 5, \"currentPage\" : 5, \"content\" : [ { \"tipo\" : \"tipo\", \"categoria\" : \"ELETRONICO\", \"id\" : 0, \"fabricanteId\" : 6, \"modelo\" : \"modelo\" }, { \"tipo\" : \"tipo\", \"categoria\" : \"ELETRONICO\", \"id\" : 0, \"fabricanteId\" : 6, \"modelo\" : \"modelo\" } ], \"totalElements\" : 1 }";
+                    String exampleString = "{ \"totalPages\" : 5, \"currentPage\" : 5, \"content\" : [ { \"tipo\" : \"tipo\", \"categoria\" : \"IMPRESSORA\", \"id\" : 0, \"fabricanteId\" : 6, \"modelo\" : \"modelo\" }, { \"tipo\" : \"tipo\", \"categoria\" : \"IMPRESSORA\", \"id\" : 0, \"fabricanteId\" : 6, \"modelo\" : \"modelo\" } ], \"totalElements\" : 1 }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
@@ -196,7 +196,7 @@ public interface EquipamentosApiDelegate {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"totalPages\" : 5, \"currentPage\" : 5, \"content\" : [ { \"tipo\" : \"tipo\", \"categoria\" : \"ELETRONICO\", \"id\" : 0, \"fabricanteId\" : 6, \"modelo\" : \"modelo\" }, { \"tipo\" : \"tipo\", \"categoria\" : \"ELETRONICO\", \"id\" : 0, \"fabricanteId\" : 6, \"modelo\" : \"modelo\" } ], \"totalElements\" : 1 }";
+                    String exampleString = "{ \"totalPages\" : 5, \"currentPage\" : 5, \"content\" : [ { \"tipo\" : \"tipo\", \"categoria\" : \"IMPRESSORA\", \"id\" : 0, \"fabricanteId\" : 6, \"modelo\" : \"modelo\" }, { \"tipo\" : \"tipo\", \"categoria\" : \"IMPRESSORA\", \"id\" : 0, \"fabricanteId\" : 6, \"modelo\" : \"modelo\" } ], \"totalElements\" : 1 }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
@@ -219,7 +219,7 @@ public interface EquipamentosApiDelegate {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"tipo\" : \"tipo\", \"categoria\" : \"ELETRONICO\", \"id\" : 0, \"fabricanteId\" : 6, \"modelo\" : \"modelo\" }";
+                    String exampleString = "{ \"tipo\" : \"tipo\", \"categoria\" : \"IMPRESSORA\", \"id\" : 0, \"fabricanteId\" : 6, \"modelo\" : \"modelo\" }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }

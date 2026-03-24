@@ -30,14 +30,14 @@ public class EquipamentoService {
         log.debug("Criando novo equipamento: {}", requestDTO.getModelo());
 
         var fabricante = fabricanteRepository.findById(requestDTO.getFabricanteId())
-            .orElseThrow(() -> EntityNotFoundException.ofEntity("Fabricante", requestDTO.getFabricanteId()));
+                .orElseThrow(() -> EntityNotFoundException.ofEntity("Fabricante", requestDTO.getFabricanteId()));
 
         var equipamento = new Equipamento();
         equipamento.setModelo(requestDTO.getModelo());
-        equipamento.setCategoria(convertToEntityCategoria(requestDTO.getCategoria()));
+        equipamento.setCategoria(toDomainCategoria(requestDTO.getCategoria()));
         equipamento.setTipo(requestDTO.getTipo());
         equipamento.setFabricante(fabricante);
-        
+
         var salvo = repository.save(equipamento);
 
         log.info("Equipamento criado com sucesso - ID: {}", salvo.getId());
@@ -68,16 +68,13 @@ public class EquipamentoService {
     public EquipamentoResponseDTO obterPorId(Long id) {
         log.debug("Buscando equipamento com ID: {}", id);
         var equipamento = repository.findById(id)
-            .orElseThrow(() -> EntityNotFoundException.ofEntity("Equipamento", id));
+                .orElseThrow(() -> EntityNotFoundException.ofEntity("Equipamento", id));
         return convertToResponseDTO(equipamento);
     }
 
     public List<EquipamentoResponseDTO> buscarPorModelo(String modelo) {
         log.debug("Buscando equipamentos por modelo: {}", modelo);
-        return repository.findByModeloContainingIgnoreCase(modelo)
-            .stream()
-            .map(this::convertToResponseDTO)
-            .toList();
+        return repository.findByModeloContainingIgnoreCase(modelo).stream().map(this::convertToResponseDTO).toList();
     }
 
     @Transactional
@@ -85,13 +82,13 @@ public class EquipamentoService {
         log.debug("Atualizando equipamento ID: {}", id);
 
         var equipamento = repository.findById(id)
-            .orElseThrow(() -> EntityNotFoundException.ofEntity("Equipamento", id));
+                .orElseThrow(() -> EntityNotFoundException.ofEntity("Equipamento", id));
 
         var fabricante = fabricanteRepository.findById(requestDTO.getFabricanteId())
-            .orElseThrow(() -> EntityNotFoundException.ofEntity("Fabricante", requestDTO.getFabricanteId()));
+                .orElseThrow(() -> EntityNotFoundException.ofEntity("Fabricante", requestDTO.getFabricanteId()));
 
         equipamento.setModelo(requestDTO.getModelo());
-        equipamento.setCategoria(convertToEntityCategoria(requestDTO.getCategoria()));
+        equipamento.setCategoria(toDomainCategoria(requestDTO.getCategoria()));
         equipamento.setTipo(requestDTO.getTipo());
         equipamento.setFabricante(fabricante);
 
@@ -105,7 +102,7 @@ public class EquipamentoService {
         log.debug("Deletando equipamento ID: {}", id);
 
         var equipamento = repository.findById(id)
-            .orElseThrow(() -> EntityNotFoundException.ofEntity("Equipamento", id));
+                .orElseThrow(() -> EntityNotFoundException.ofEntity("Equipamento", id));
 
         repository.delete(equipamento);
         log.info("Equipamento deletado com sucesso - ID: {}", id);
@@ -118,19 +115,26 @@ public class EquipamentoService {
     }
 
     private EquipamentoResponseDTO convertToResponseDTO(Equipamento entity) {
-        return new EquipamentoResponseDTO()
-            .id(entity.getId())
-            .modelo(entity.getModelo())
-            .categoria(convertToDTOCategoria(entity.getCategoria()))
-            .tipo(entity.getTipo())
-            .fabricanteId(entity.getFabricante().getId());
+        return new EquipamentoResponseDTO().id(entity.getId()).modelo(entity.getModelo())
+                .categoria(toDtoCategoria(entity.getCategoria())).tipo(entity.getTipo())
+                .fabricanteId(entity.getFabricante().getId());
     }
 
-    private com.repairsystem.domain.enums.CategoriaEquipamento convertToEntityCategoria(com.repairsystem.dto.CategoriaEquipamento dtoCategoria) {
-        return com.repairsystem.domain.enums.CategoriaEquipamento.valueOf(dtoCategoria.getValue());
+    public com.repairsystem.domain.enums.CategoriaEquipamento toDomainCategoria(
+            com.repairsystem.dto.CategoriaEquipamento dtoCategoria) {
+        if (dtoCategoria == null) {
+            throw new IllegalArgumentException("CategoriaEquipamento não pode ser nula");
+        }
+
+        return com.repairsystem.domain.enums.CategoriaEquipamento.valueOf(dtoCategoria.name());
     }
 
-    private com.repairsystem.dto.CategoriaEquipamento convertToDTOCategoria(com.repairsystem.domain.enums.CategoriaEquipamento entityCategoria) {
-        return com.repairsystem.dto.CategoriaEquipamento.fromValue(entityCategoria.name());
+    public com.repairsystem.dto.CategoriaEquipamento toDtoCategoria(
+            com.repairsystem.domain.enums.CategoriaEquipamento entityCategoria) {
+        if (entityCategoria == null) {
+            return com.repairsystem.dto.CategoriaEquipamento.OUTRO;
+        }
+
+        return com.repairsystem.dto.CategoriaEquipamento.valueOf(entityCategoria.name());
     }
 }

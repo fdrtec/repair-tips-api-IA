@@ -20,7 +20,8 @@ public interface PecaRepository extends JpaRepository<Peca, Long> {
     Page<Peca> findByCategoria(String categoria, Pageable pageable);
 
     @Query("SELECT p FROM Peca p WHERE LOWER(p.nome) LIKE LOWER(CONCAT('%', :nome, '%')) OR LOWER(p.partNumber) LIKE LOWER(CONCAT('%', :partNumber, '%'))")
-    Page<Peca> buscarPecaPorNomeOuPartNumber(@Param("nome") String nome, @Param("partNumber") String partNumber, Pageable pageable);
+    Page<Peca> buscarPecaPorNomeOuPartNumber(@Param("nome") String nome, @Param("partNumber") String partNumber,
+            Pageable pageable);
 
     @Query("SELECT p FROM Peca p JOIN p.equipamentos e WHERE e.id = :equipamentoId")
     Page<Peca> findByEquipamentoId(@Param("equipamentoId") Long equipamentoId, Pageable pageable);

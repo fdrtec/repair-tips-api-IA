@@ -681,10 +681,16 @@ components:
     CategoriaEquipamento:
       type: string
       enum:
-        - ELETRONICO
-        - ELETRODOMESTICO
-        - INFORMATICA
-        - CLIMATIZACAO
+        - IMPRESSORA
+        - SCANNER
+        - COPIADORA
+        - MULTIFUNCIONAL
+        - FAX
+        - PROJETOR
+        - MONITOR
+        - COMPUTADOR
+        - SERVIDOR
+        - IMPRESSORA_3D
         - OUTRO
       description: Categoria do equipamento
 

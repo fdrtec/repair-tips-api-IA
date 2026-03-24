@@ -26,8 +26,8 @@ public interface DicaRepository extends JpaRepository<Dica, Long> {
     @Query("SELECT d FROM Dica d JOIN d.pecas p WHERE p.id = :pecaId AND d.ativo = true")
     List<Dica> findByPecaIdAndAtivoTrue(@Param("pecaId") Long pecaId);
 
-    @Query("SELECT d FROM Dica d JOIN d.equipamentos e JOIN e.fabricante f " +
-           "WHERE f.sigla = :siglFabricante AND d.ativo = true")
+    @Query("SELECT d FROM Dica d JOIN d.equipamentos e JOIN e.fabricante f "
+            + "WHERE f.sigla = :siglFabricante AND d.ativo = true")
     List<Dica> findByFabricanteSiglaAndAtivoTrue(@Param("siglFabricante") String siglFabricante);
 
     @Query("SELECT d FROM Dica d WHERE d.ativo = false")

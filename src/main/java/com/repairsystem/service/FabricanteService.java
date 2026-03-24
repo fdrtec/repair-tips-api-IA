@@ -32,7 +32,7 @@ public class FabricanteService {
         var fabricante = new Fabricante();
         fabricante.setNome(requestDTO.getNome());
         fabricante.setSigla(requestDTO.getSigla());
-        
+
         var salvo = repository.save(fabricante);
 
         log.info("Fabricante criado com sucesso - ID: {}", salvo.getId());
@@ -46,22 +46,19 @@ public class FabricanteService {
 
     public List<FabricanteResponseDTO> listarTodos() {
         log.debug("Listando todos os fabricantes");
-        return repository.findAll().stream()
-            .map(this::convertToResponseDTO)
-            .toList();
+        return repository.findAll().stream().map(this::convertToResponseDTO).toList();
     }
 
     public FabricanteResponseDTO obterPorId(Long id) {
         log.debug("Buscando fabricante com ID: {}", id);
-        var fabricante = repository.findById(id)
-            .orElseThrow(() -> EntityNotFoundException.ofEntity("Fabricante", id));
+        var fabricante = repository.findById(id).orElseThrow(() -> EntityNotFoundException.ofEntity("Fabricante", id));
         return convertToResponseDTO(fabricante);
     }
 
     public FabricanteResponseDTO obterPorNome(String nome) {
         log.debug("Buscando fabricante com nome: {}", nome);
         var fabricante = repository.findByNome(nome)
-            .orElseThrow(() -> EntityNotFoundException.ofEntity("Fabricante", "nome", nome));
+                .orElseThrow(() -> EntityNotFoundException.ofEntity("Fabricante", "nome", nome));
         return convertToResponseDTO(fabricante);
     }
 
@@ -69,8 +66,7 @@ public class FabricanteService {
     public FabricanteResponseDTO atualizar(Long id, FabricanteRequestDTO requestDTO) {
         log.debug("Atualizando fabricante ID: {}", id);
 
-        var fabricante = repository.findById(id)
-            .orElseThrow(() -> EntityNotFoundException.ofEntity("Fabricante", id));
+        var fabricante = repository.findById(id).orElseThrow(() -> EntityNotFoundException.ofEntity("Fabricante", id));
 
         if (!fabricante.getNome().equals(requestDTO.getNome()) && repository.existsByNome(requestDTO.getNome())) {
             throw DuplicateEntityException.ofField("Fabricante", "nome", requestDTO.getNome());
@@ -92,8 +88,7 @@ public class FabricanteService {
     public void deletar(Long id) {
         log.debug("Deletando fabricante ID: {}", id);
 
-        var fabricante = repository.findById(id)
-            .orElseThrow(() -> EntityNotFoundException.ofEntity("Fabricante", id));
+        var fabricante = repository.findById(id).orElseThrow(() -> EntityNotFoundException.ofEntity("Fabricante", id));
 
         repository.delete(fabricante);
         log.info("Fabricante deletado com sucesso - ID: {}", id);
@@ -109,9 +104,6 @@ public class FabricanteService {
     }
 
     private FabricanteResponseDTO convertToResponseDTO(Fabricante entity) {
-        return new FabricanteResponseDTO()
-            .id(entity.getId())
-            .nome(entity.getNome())
-            .sigla(entity.getSigla());
+        return new FabricanteResponseDTO().id(entity.getId()).nome(entity.getNome()).sigla(entity.getSigla());
     }
 }
