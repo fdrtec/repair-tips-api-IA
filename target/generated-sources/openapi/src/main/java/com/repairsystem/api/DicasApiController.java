@@ -27,7 +27,7 @@ import java.util.Map;
 import java.util.Optional;
 import jakarta.annotation.Generated;
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2026-03-23T22:38:59.335231862-03:00[America/Sao_Paulo]", comments = "Generator version: 7.8.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2026-03-23T22:50:24.713899220-03:00[America/Sao_Paulo]", comments = "Generator version: 7.8.0")
 @Controller
 @RequestMapping("${openapi.repairTips.base-path:/api}")
 public class DicasApiController implements DicasApi {

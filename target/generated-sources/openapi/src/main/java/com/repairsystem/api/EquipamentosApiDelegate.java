@@ -21,7 +21,7 @@ import jakarta.annotation.Generated;
  * A delegate to be called by the {@link EquipamentosApiController}}.
  * Implement this interface with a {@link org.springframework.stereotype.Service} annotated class.
  */
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2026-03-23T22:40:45.938316944-03:00[America/Sao_Paulo]", comments = "Generator version: 7.8.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2026-03-23T22:52:47.635407812-03:00[America/Sao_Paulo]", comments = "Generator version: 7.8.0")
 public interface EquipamentosApiDelegate {
 
     default Optional<NativeWebRequest> getRequest() {
